@@ -3,6 +3,7 @@ import requests
 import csv
 from bs4 import BeautifulSoup
 
+
 @dataclass
 class Quote:
     text: str
@@ -22,7 +23,9 @@ def main(output_csv_path: str) -> None:
         csv_writer = csv.writer(csvfile, delimiter=",")
         csv_writer.writerow(["text", "author", "tags"])
 
-        for quote, author, tag in zip(quotes, authors, tags):
+        for quote, author, tag in zip(quotes,
+                                      authors,
+                                      tags):
             csv_writer.writerow([quote.text, author.text, tag.text.split()[1:]])
 
 
