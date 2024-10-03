@@ -26,7 +26,8 @@ def main(output_csv_path: str) -> None:
         for quote, author, tag in zip(quotes,
                                       authors,
                                       tags):
-            csv_writer.writerow([quote.text, author.text, tag.text.split()[1:]])
+            csv_writer.writerow([quote.text, author.text,
+                                 tag.text.split()[1:]])
 
 
 if __name__ == "__main__":
