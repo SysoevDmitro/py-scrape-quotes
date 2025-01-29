@@ -1,4 +1,6 @@
 from dataclasses import dataclass
+from typing import List
+
 import requests
 import csv
 from bs4 import BeautifulSoup
@@ -11,20 +13,20 @@ class Quote:
     tags: list[str]
 
 
-def fetch_page(url):
+def fetch_page(url: str) -> BeautifulSoup:
     response = requests.get(url)
     response.raise_for_status()
     return BeautifulSoup(response.text, "html.parser")
 
 
-def extract_quotes(soup):
+def extract_quotes(soup: BeautifulSoup) -> List[Quote]:
     quotes = soup.find_all("span", attrs={"class": "text"})
     authors = soup.find_all("small", attrs={"class": "author"})
     tags = soup.find_all("div", attrs={"class": "tags"})
     return zip(quotes, authors, tags)
 
 
-def write_csv(quotes_data, output_csv_path):
+def write_csv(quotes_data: List[Quote], output_csv_path: str) -> None:
     with open(output_csv_path, "w", encoding="utf-8", newline="") as csvfile:
         csv_writer = csv.writer(csvfile, delimiter=",")
         csv_writer.writerow(["text", "author", "tags"])
